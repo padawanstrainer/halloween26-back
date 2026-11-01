@@ -17,6 +17,6 @@ jobs:
       - name: Mod
         run: go mod init padita
       - name: Build
-        run: go build -o main /dev/null
+        run: go build -o main .
       - name: Linter
         run: go vet ./...
