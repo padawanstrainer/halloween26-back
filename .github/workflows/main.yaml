@@ -1,0 +1,24 @@
+name: deploy_main
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, docker, back]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Sync code al proyecto local
+        run: |
+          rsync -a --delete "${GITHUB_WORKSPACE}/" "${COMPOSE_PROJECT_PATH}/src/back/"
+
+      - name: Build y levantar back
+        run: |
+          docker compose -f "${COMPOSE_PROJECT_PATH}/dockers/compose.yaml" build back
+          docker compose -f "${COMPOSE_PROJECT_PATH}/dockers/compose.yaml" up -d back
+
+      - name: Verificar contenedor
+        run: docker compose -f "${COMPOSE_PROJECT_PATH}/dockers/compose.yaml" ps back
