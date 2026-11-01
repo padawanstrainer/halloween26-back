@@ -14,6 +14,8 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 1.27.2
+      - name: Mod
+        run: go mod init padita
       - name: Build
         run: go build -o main /dev/null
       - name: Linter
