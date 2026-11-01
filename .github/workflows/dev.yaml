@@ -1,4 +1,4 @@
-name: dev 
+name: push_to_dev
 
 on:
   push:
